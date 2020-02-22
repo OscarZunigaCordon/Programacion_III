@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InscripcionEditDlg" widgetVar="InscripcionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditInscripcionTitle}">
+            <h:form id="InscripcionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{inscripcionController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditInscripcionLabel_codigoInscripcion}" for="codigoInscripcion" />
+                        <p:inputText id="codigoInscripcion" value="#{inscripcionController.selected.codigoInscripcion}" title="#{bundle.EditInscripcionTitle_codigoInscripcion}" required="true" requiredMessage="#{bundle.EditInscripcionRequiredMessage_codigoInscripcion}"/>
+                        <p:outputLabel value="#{bundle.EditInscripcionLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{inscripcionController.selected.fecha}" title="#{bundle.EditInscripcionTitle_fecha}" required="true" requiredMessage="#{bundle.EditInscripcionRequiredMessage_fecha}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditInscripcionLabel_asignacionCodigoAsignacion}" for="asignacionCodigoAsignacion" />
+                        <p:selectOneMenu id="asignacionCodigoAsignacion" value="#{inscripcionController.selected.asignacionCodigoAsignacion}" required="true" requiredMessage="#{bundle.EditInscripcionRequiredMessage_asignacionCodigoAsignacion}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{asignacionController.itemsAvailableSelectOne}"
+                                           var="asignacionCodigoAsignacionItem"
+                                           itemValue="#{asignacionCodigoAsignacionItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{inscripcionController.update}" value="#{bundle.Save}" update="display,:InscripcionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'InscripcionEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="InscripcionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

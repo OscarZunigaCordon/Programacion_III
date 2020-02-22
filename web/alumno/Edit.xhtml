@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AlumnoEditDlg" widgetVar="AlumnoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditAlumnoTitle}">
+            <h:form id="AlumnoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{alumnoController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditAlumnoLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{alumnoController.selected.codigo}" title="#{bundle.EditAlumnoTitle_codigo}" required="true" requiredMessage="#{bundle.EditAlumnoRequiredMessage_codigo}"/>
+                        <p:outputLabel value="#{bundle.EditAlumnoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{alumnoController.selected.nombre}" title="#{bundle.EditAlumnoTitle_nombre}" required="true" requiredMessage="#{bundle.EditAlumnoRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.EditAlumnoLabel_apellido}" for="apellido" />
+                        <p:inputText id="apellido" value="#{alumnoController.selected.apellido}" title="#{bundle.EditAlumnoTitle_apellido}" required="true" requiredMessage="#{bundle.EditAlumnoRequiredMessage_apellido}"/>
+                        <p:outputLabel value="#{bundle.EditAlumnoLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{alumnoController.selected.direccion}" title="#{bundle.EditAlumnoTitle_direccion}" required="true" requiredMessage="#{bundle.EditAlumnoRequiredMessage_direccion}"/>
+                        <p:outputLabel value="#{bundle.EditAlumnoLabel_generoCodigoGenero}" for="generoCodigoGenero" />
+                        <p:selectOneMenu id="generoCodigoGenero" value="#{alumnoController.selected.generoCodigoGenero}" required="true" requiredMessage="#{bundle.EditAlumnoRequiredMessage_generoCodigoGenero}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{generoController.itemsAvailableSelectOne}"
+                                           var="generoCodigoGeneroItem"
+                                           itemValue="#{generoCodigoGeneroItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditAlumnoLabel_inscripcionCodigoInscripcion}" for="inscripcionCodigoInscripcion" />
+                        <p:selectOneMenu id="inscripcionCodigoInscripcion" value="#{alumnoController.selected.inscripcionCodigoInscripcion}" required="true" requiredMessage="#{bundle.EditAlumnoRequiredMessage_inscripcionCodigoInscripcion}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{inscripcionController.itemsAvailableSelectOne}"
+                                           var="inscripcionCodigoInscripcionItem"
+                                           itemValue="#{inscripcionCodigoInscripcionItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{alumnoController.update}" value="#{bundle.Save}" update="display,:AlumnoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AlumnoEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AlumnoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
